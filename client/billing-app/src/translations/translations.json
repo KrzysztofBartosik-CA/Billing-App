@@ -1,0 +1,11 @@
+{
+  "en": {
+    "hello_label": "Hello world"
+  },
+  "pl": {
+    "hello_label": "Cześć świecie"
+  },
+  "de": {
+    "hello_label": "Hallo Welt"
+  }
+}
