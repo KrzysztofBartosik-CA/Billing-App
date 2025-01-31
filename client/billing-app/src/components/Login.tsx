@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { TextField, Button, Typography, Box } from '@mui/material';
-import './css/Login.css';
+import './scss/Login.scss';
 
 const Login = () => {
   const [username, setUsername] = useState('');

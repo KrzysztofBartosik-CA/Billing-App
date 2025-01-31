@@ -4,7 +4,7 @@ import { register } from '../services/authService';
 import { AuthContext } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { TextField, Button, Typography, Box } from '@mui/material';
-import './css/Register.css';
+import './scss/Register.scss';
 
 const Register = () => {
   const [username, setUsername] = useState('');
