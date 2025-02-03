@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 export interface LanguageContextProps {
     language: string;
@@ -10,8 +10,16 @@ export const LanguageContext = createContext<LanguageContextProps | undefined>(u
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [language, setLanguage] = useState<string>('en');
 
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem('language');
+        if (storedLanguage) {
+            setLanguage(storedLanguage);
+        }
+    }, []);
+
     const changeLanguage = (lang: string) => {
         setLanguage(lang);
+        localStorage.setItem('language', lang);
     };
 
     return (
