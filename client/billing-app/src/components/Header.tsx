@@ -13,7 +13,7 @@ import UserMenu from "./UserMenu";
 const Header = () => {
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <MobileMenu/>

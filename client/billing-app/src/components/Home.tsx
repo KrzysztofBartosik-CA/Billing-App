@@ -7,6 +7,7 @@ import User from './User';
 import Invoices from './Invoices';
 import InvoiceDetails from './InvoiceDetails';
 import AddInvoice from './AddInvoice';
+import Welcome from "./Welcome";
 import './scss/Home.scss';
 
 const Home = () => {
@@ -32,6 +33,7 @@ const Home = () => {
                     <Route path="invoices" element={<Invoices/>}/>
                     <Route path="invoice/:id" element={<InvoiceDetails/>}/>
                     <Route path="add-invoice" element={<AddInvoice/>}/>
+                    <Route path="*" element={<Welcome />}/>
                 </Routes>
             </div>
         </div>

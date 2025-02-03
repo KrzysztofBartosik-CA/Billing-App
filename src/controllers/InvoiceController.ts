@@ -2,12 +2,31 @@ import {Request, Response} from 'express';
 import mongoose from 'mongoose';
 import validator from 'validator';
 import Invoice from '../models/Invoice';
+import User from "../models/User";
 
 export const createInvoice = async (req: Request, res: Response) => {
     try {
+        const userId = new mongoose.Types.ObjectId(req.body.userId);
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
+        const currentYear = new Date().getFullYear();
+        const invoiceCount = await Invoice.countDocuments({
+            userId,
+            date: {
+                $gte: new Date(currentYear, currentMonth - 1, 1),
+                $lt: new Date(currentYear, currentMonth, 1)
+            }
+        });
+
+        const invoiceNumber = `INV/${user.username}/${currentMonth}/${currentYear}/${invoiceCount + 1}`;
+
         const invoiceData = {
-            userId: new mongoose.Types.ObjectId(req.body.userId),
-            invoiceNumber: validator.escape(req.body.invoiceNumber || ''),
+            userId,
+            invoiceNumber: invoiceNumber,
             date: new Date(req.body.date),
             totalAmount: req.body.totalAmount,
             lineItems: req.body.lineItems.map((item: any) => ({

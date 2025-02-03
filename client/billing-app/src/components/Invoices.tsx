@@ -1,4 +1,3 @@
-// client/billing-app/src/components/Invoices.tsx
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {
@@ -15,16 +14,9 @@ import {
     CircularProgress
 } from '@mui/material';
 import {Delete as DeleteIcon} from '@mui/icons-material';
+import {Invoice} from '../types/interfaces';
 import RemovalConfirmation from './RemovalConfirmation';
 import './scss/Invoices.scss';
-
-interface Invoice {
-    _id: string;
-    invoiceNumber: string;
-    date: string;
-    totalAmount: number;
-    status: 'paid' | 'unpaid' | 'pending';
-}
 
 const Invoices = () => {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -93,7 +85,7 @@ const Invoices = () => {
     }
 
     return (
-        <>
+        <Box display="flex" justifyContent="center" alignItems="flex-start" height="100vh" px={4} mt={12}>
             <TableContainer component={Paper} className="invoices">
                 <Table>
                     <TableHead>
@@ -131,7 +123,7 @@ const Invoices = () => {
                 onClose={handleClose}
                 onConfirm={handleDeleteConfirm}
             />
-        </>
+        </Box>
     );
 };
 

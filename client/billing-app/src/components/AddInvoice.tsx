@@ -1,3 +1,4 @@
+// client/billing-app/src/components/AddInvoice.tsx
 import React, {useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {TextField, Button, Box, CircularProgress} from '@mui/material';
@@ -10,7 +11,6 @@ import './scss/AddInvoice.scss';
 const AddInvoice = () => {
     const authContext = useContext(AuthContext);
     const user = authContext?.user;
-    const [invoiceNumber, setInvoiceNumber] = useState('');
     const [date, setDate] = useState('');
     const [total, setTotal] = useState('');
     const [lineItems, setLineItems] = useState<LineItem[]>([{
@@ -20,7 +20,6 @@ const AddInvoice = () => {
         total: 0,
         tax: 0
     }]);
-    const [invoiceNumberError, setInvoiceNumberError] = useState(false);
     const [dateError, setDateError] = useState(false);
     const [totalError, setTotalError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -52,7 +51,6 @@ const AddInvoice = () => {
     const createInvoicePayload = () => {
         const payload = {
             userId: user?.id,
-            invoiceNumber,
             date,
             totalAmount: parseFloat(total),
             lineItems,
@@ -62,11 +60,10 @@ const AddInvoice = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setInvoiceNumberError(!invoiceNumber);
         setDateError(!date);
         setTotalError(!total);
 
-        if (!invoiceNumber || !date || !total) {
+        if (!date || !total) {
             return;
         }
 
@@ -105,16 +102,9 @@ const AddInvoice = () => {
             onSubmit={handleSubmit}
             className="add-invoice-form"
             display="flex"
+            mt={12}
         >
             <Box flex={1} className="add-invoice-form__left">
-                <TextField
-                    label="Invoice Number"
-                    value={invoiceNumber}
-                    onChange={(e) => setInvoiceNumber(e.target.value)}
-                    error={invoiceNumberError}
-                    helperText={invoiceNumberError ? 'Invoice number is required' : ''}
-                    className="add-invoice-form__input"
-                />
                 <TextField
                     label="Date"
                     type="date"
