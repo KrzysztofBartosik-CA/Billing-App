@@ -91,8 +91,8 @@ const Invoices = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Invoice Number</TableCell>
-                            <TableCell>Date of Creation</TableCell>
-                            <TableCell>Total Amount</TableCell>
+                            <TableCell align="right">Date of Creation</TableCell>
+                            <TableCell align="right">Total Amount</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Actions</TableCell>
                         </TableRow>
@@ -105,8 +105,8 @@ const Invoices = () => {
                                         {invoice.invoiceNumber}
                                     </Link>
                                 </TableCell>
-                                <TableCell>{new Date(invoice.date).toLocaleDateString()}</TableCell>
-                                <TableCell>{invoice.totalAmount}</TableCell>
+                                <TableCell align="right">{new Date(invoice.date).toLocaleDateString()}</TableCell>
+                                <TableCell align="right">{`${invoice.totalAmount} $`}</TableCell>
                                 <TableCell>{invoice.status}</TableCell>
                                 <TableCell>
                                     <IconButton onClick={() => handleDeleteClick(invoice)} color="secondary">

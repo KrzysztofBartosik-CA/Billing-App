@@ -19,6 +19,7 @@ const AddInvoice = () => {
         tax: 0
     }]);
     const [dateError, setDateError] = useState(false);
+    const [lineItemsError, setLineItemsError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastSeverity, setToastSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
@@ -28,7 +29,8 @@ const AddInvoice = () => {
 
     useEffect(() => {
         const calculateTotalAmount = () => {
-            return lineItems.reduce((sum, item) => sum + item.total, 0);
+            const sum = lineItems.reduce((sum, item) => sum + item.total, 0) || 0;
+            return parseFloat(sum.toFixed(2));
         };
         setTotal(calculateTotalAmount());
     }, [lineItems]);
@@ -37,10 +39,16 @@ const AddInvoice = () => {
         const newLineItems = [...lineItems];
         newLineItems[index] = {
             ...newLineItems[index],
-            [field]: value,
-            total: newLineItems[index].quantity * newLineItems[index].price,
-            tax: newLineItems[index].quantity * newLineItems[index].price * 0.1 // Assuming 10% tax
+            [field]: field === 'tax' ? parseFloat(value as string) : value
         };
+
+        const taxRate = newLineItems[index].tax || 0;
+        if (field === 'price' || field === 'quantity' || field === 'tax') {
+            newLineItems[index].total = parseFloat((newLineItems[index].quantity * (newLineItems[index].price * taxRate + newLineItems[index].price)).toFixed(2));
+        } else if (field === 'total') {
+            newLineItems[index].price = parseFloat((newLineItems[index].total / (newLineItems[index].quantity * (1 + taxRate))).toFixed(2));
+        }
+
         setLineItems(newLineItems);
     };
 
@@ -67,7 +75,10 @@ const AddInvoice = () => {
         e.preventDefault();
         setDateError(!date);
 
-        if (!date) {
+        const hasEmptyFields = lineItems.some(item => !item.description || item.quantity <= 0 || item.price <= 0);
+        setLineItemsError(hasEmptyFields);
+
+        if (!date || hasEmptyFields) {
             return;
         }
 
@@ -121,7 +132,7 @@ const AddInvoice = () => {
                     InputLabelProps={{shrink: true}}
                 />
                 <Typography variant="h6" mt={2}>
-                    Total amount: {total}
+                    `Total amount: ${total.toFixed(2)} \$`
                 </Typography>
             </Box>
             <Box className="add-invoice-form__line-items">
@@ -138,6 +149,11 @@ const AddInvoice = () => {
                     Add Line Item
                 </Button>
             </Box>
+            {lineItemsError && (
+                <Typography color="error" variant="body2" mt={2}>
+                    All line item fields must be filled out and quantities/prices must be greater than zero.
+                </Typography>
+            )}
             <Box className="add-invoice-form__actions" mt={2} mb={4}>
                 <Button type="submit" variant="contained" color="primary" disabled={loading}>
                     {loading ? <CircularProgress size={24}/> : 'Add Invoice'}
