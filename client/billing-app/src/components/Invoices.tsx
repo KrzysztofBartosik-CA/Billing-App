@@ -1,3 +1,4 @@
+// client/billing-app/src/components/Invoices.tsx
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {
@@ -22,6 +23,7 @@ interface Invoice {
     invoiceNumber: string;
     date: string;
     totalAmount: number;
+    status: 'paid' | 'unpaid' | 'pending';
 }
 
 const Invoices = () => {
@@ -43,6 +45,7 @@ const Invoices = () => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchInvoices();
     }, []);
@@ -98,6 +101,7 @@ const Invoices = () => {
                             <TableCell>Invoice Number</TableCell>
                             <TableCell>Date of Creation</TableCell>
                             <TableCell>Total Amount</TableCell>
+                            <TableCell>Status</TableCell>
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -111,6 +115,7 @@ const Invoices = () => {
                                 </TableCell>
                                 <TableCell>{new Date(invoice.date).toLocaleDateString()}</TableCell>
                                 <TableCell>{invoice.totalAmount}</TableCell>
+                                <TableCell>{invoice.status}</TableCell>
                                 <TableCell>
                                     <IconButton onClick={() => handleDeleteClick(invoice)} color="secondary">
                                         <DeleteIcon/>

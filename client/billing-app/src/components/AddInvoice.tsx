@@ -1,19 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {TextField, Button, Box, CircularProgress, IconButton} from '@mui/material';
-import {Add as AddIcon, Remove as RemoveIcon} from '@mui/icons-material';
+import {TextField, Button, Box, CircularProgress} from '@mui/material';
+import {Add as AddIcon} from '@mui/icons-material';
 import Toast from './Toast';
+import {AuthContext} from '../context/AuthContext';
+import {LineItemComponent, LineItem} from "./LineItemComponent";
 import './scss/AddInvoice.scss';
 
-interface LineItem {
-    description: string;
-    quantity: number;
-    price: number;
-    total: number;
-    tax: number;
-}
-
 const AddInvoice = () => {
+    const authContext = useContext(AuthContext);
+    const user = authContext?.user;
     const [invoiceNumber, setInvoiceNumber] = useState('');
     const [date, setDate] = useState('');
     const [total, setTotal] = useState('');
@@ -53,6 +49,17 @@ const AddInvoice = () => {
         setLineItems(newLineItems);
     };
 
+    const createInvoicePayload = () => {
+        const payload = {
+            userId: user?.id,
+            invoiceNumber,
+            date,
+            totalAmount: parseFloat(total),
+            lineItems,
+        }
+        return JSON.stringify(payload);
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setInvoiceNumberError(!invoiceNumber);
@@ -71,12 +78,7 @@ const AddInvoice = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    invoiceNumber,
-                    date,
-                    totalAmount: parseFloat(total),
-                    lineItems,
-                }),
+                body: createInvoicePayload(),
                 credentials: 'include',
             });
 
@@ -135,47 +137,13 @@ const AddInvoice = () => {
             </Box>
             <Box flex={1} className="add-invoice-form__right">
                 {lineItems.map((item, index) => (
-                    <Box key={index} display="flex" alignItems="center" className="line-item-group">
-                        <TextField
-                            label="Description"
-                            value={item.description}
-                            onChange={(e) => handleLineItemChange(index, 'description', e.target.value)}
-                            className="line-item-group__input"
-                        />
-                        <TextField
-                            label="Quantity"
-                            type="number"
-                            value={item.quantity}
-                            onChange={(e) => handleLineItemChange(index, 'quantity', parseInt(e.target.value))}
-                            className="line-item-group__input"
-                        />
-                        <TextField
-                            label="Price"
-                            type="number"
-                            value={item.price}
-                            onChange={(e) => handleLineItemChange(index, 'price', parseFloat(e.target.value))}
-                            className="line-item-group__input"
-                        />
-                        <TextField
-                            label="Total"
-                            type="number"
-                            value={item.total}
-                            onChange={(e) => handleLineItemChange(index, 'total', parseFloat(e.target.value))}
-                            className="line-item-group__input"
-                        />
-                        <TextField
-                            label="Tax"
-                            type="number"
-                            value={item.tax}
-                            onChange={(e) => handleLineItemChange(index, 'tax', parseFloat(e.target.value))}
-                            className="line-item-group__input"
-                        />
-                        {index > 0 && (
-                            <IconButton onClick={() => handleRemoveLineItem(index)} color="secondary">
-                                <RemoveIcon/>
-                            </IconButton>
-                        )}
-                    </Box>
+                    <LineItemComponent
+                        key={index}
+                        item={item}
+                        index={index}
+                        handleLineItemChange={handleLineItemChange}
+                        handleRemoveLineItem={handleRemoveLineItem}
+                    />
                 ))}
                 <Button onClick={handleAddLineItem} variant="contained" color="primary" startIcon={<AddIcon/>}>
                     Add Line Item

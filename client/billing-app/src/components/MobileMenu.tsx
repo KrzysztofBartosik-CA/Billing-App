@@ -3,13 +3,20 @@ import React from 'react';
 import {Box, IconButton, Menu, MenuItem, Typography} from '@mui/material';
 import {Menu as MenuIcon, Receipt as ReceiptIcon} from '@mui/icons-material';
 import {menuData} from './menuData';
+import {useNavigate} from "react-router-dom";
 
 const MobileMenu = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
+
+    const handleNavigation = (path: string) => {
+        handleCloseNavMenu();
+        navigate(path);
+    }
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
@@ -45,7 +52,10 @@ const MobileMenu = () => {
                     sx={{display: {xs: 'block', md: 'none'}}}
                 >
                     {menuData.map((item) => (
-                        <MenuItem key={item.path} onClick={handleCloseNavMenu}>
+                        <MenuItem key={item.path} onClick={(event) => {
+                            event.preventDefault();
+                            handleNavigation(item.path)
+                        }}>
                             <Typography sx={{textAlign: 'center'}} component="a" href={item.path}>
                                 {item.label}
                             </Typography>

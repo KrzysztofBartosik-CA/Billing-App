@@ -3,10 +3,12 @@ import React, {FC} from 'react';
 import {Box, Button, Typography} from '@mui/material';
 import {Receipt as ReceiptIcon} from '@mui/icons-material';
 import {menuData} from './menuData';
+import {useNavigate} from "react-router-dom";
 
 const DesktopDeviceMenu: FC = () => {
-    const handleCloseNavMenu = () => {
-        // Add your logic here
+    const navigate = useNavigate();
+    const handleNavigation = (path: string) => {
+        navigate(path);
     };
 
     return (
@@ -34,7 +36,10 @@ const DesktopDeviceMenu: FC = () => {
                     <Button
                         key={item.path}
                         href={item.path}
-                        onClick={handleCloseNavMenu}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            handleNavigation(item.path)
+                        }}
                         sx={{my: 2, color: 'white', display: 'block'}}
                     >
                         {item.label}

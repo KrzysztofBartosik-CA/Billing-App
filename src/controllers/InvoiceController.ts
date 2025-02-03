@@ -5,20 +5,19 @@ import Invoice from '../models/Invoice';
 
 export const createInvoice = async (req: Request, res: Response) => {
     try {
-        console.log(req.body);
         const invoiceData = {
             userId: new mongoose.Types.ObjectId(req.body.userId),
-            invoiceNumber: validator.escape(req.body.invoiceNumber),
+            invoiceNumber: validator.escape(req.body.invoiceNumber || ''),
             date: new Date(req.body.date),
             totalAmount: req.body.totalAmount,
             lineItems: req.body.lineItems.map((item: any) => ({
-                description: validator.escape(item.description),
+                description: validator.escape(item.description || ''),
                 quantity: item.quantity,
                 price: item.price,
                 total: item.total,
-                tax: item.tax // Add tax field
+                tax: item.tax
             })),
-            status: validator.escape(req.body.status),
+            status: 'unpaid'
         };
 
         const validInvoice = new Invoice(invoiceData);
@@ -26,7 +25,7 @@ export const createInvoice = async (req: Request, res: Response) => {
         res.status(201).json(savedInvoice);
     } catch (error) {
         console.error('Error saving invoice:', error);
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 

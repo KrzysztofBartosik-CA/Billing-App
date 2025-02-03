@@ -14,9 +14,9 @@ export const login = async (username: string, password: string) => {
 export const checkAuth = async () => {
     try {
         const response = await axios.get(`${API_URL}/check-auth`, {withCredentials: true});
-        return response.data.isAuthenticated;
+        return response.data;
     } catch (error) {
-        return false;
+        return { isAuthenticated: false, user: null };
     }
 };
 
