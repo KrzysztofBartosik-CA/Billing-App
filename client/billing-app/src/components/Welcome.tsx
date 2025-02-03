@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Typography, Box } from '@mui/material';
-import { AuthContext } from '../context/AuthContext';
+import React, {useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Button, Typography, Box} from '@mui/material';
+import {AuthContext} from '../context/AuthContext';
+import {useTranslation} from '../hooks/useTranslation';
 
 const Welcome = () => {
+    const {i18n} = useTranslation();
     const authContext = useContext(AuthContext);
     const user = authContext?.user;
     const navigate = useNavigate();
@@ -17,13 +19,13 @@ const Welcome = () => {
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
             <Typography variant="h4" gutterBottom mb={2}>
-                Hello {userName}!
+                {i18n('hello')} {userName}!
             </Typography>
             <Typography variant="body1" gutterBottom mb={4}>
-                Click the button below to see your invoices or use the menu to add the next invoice.
+                {i18n('welcome_message')}
             </Typography>
             <Button variant="outlined" color="primary" onClick={handleNavigate}>
-                See Invoices
+                {i18n('see_invoices')}
             </Button>
         </Box>
     );

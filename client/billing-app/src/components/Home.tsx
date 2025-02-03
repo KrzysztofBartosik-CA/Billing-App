@@ -1,4 +1,3 @@
-// client/billing-app/src/components/Home.tsx
 import React, {useContext} from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext';
@@ -33,7 +32,7 @@ const Home = () => {
                     <Route path="invoices" element={<Invoices/>}/>
                     <Route path="invoice/:id" element={<InvoiceDetails/>}/>
                     <Route path="add-invoice" element={<AddInvoice/>}/>
-                    <Route path="*" element={<Welcome />}/>
+                    <Route path="*" element={<Welcome/>}/>
                 </Routes>
             </div>
         </div>

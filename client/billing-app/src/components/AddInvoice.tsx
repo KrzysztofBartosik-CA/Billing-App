@@ -5,9 +5,11 @@ import {Add as AddIcon} from '@mui/icons-material';
 import Toast from './Toast';
 import {AuthContext} from '../context/AuthContext';
 import {LineItemComponent, LineItem} from "./LineItemComponent";
+import {useTranslation} from '../hooks/useTranslation';
 import './scss/AddInvoice.scss';
 
 const AddInvoice = () => {
+    const {i18n} = useTranslation();
     const authContext = useContext(AuthContext);
     const user = authContext?.user;
     const [date, setDate] = useState('');
@@ -99,12 +101,12 @@ const AddInvoice = () => {
             }
 
             setToastSeverity('success');
-            setToastMessage('Invoice added successfully');
+            setToastMessage(i18n('invoice_added_success'));
             setToastOpen(true);
             navigate('/invoices');
         } catch (error) {
             setToastSeverity('error');
-            setToastMessage('Error adding invoice');
+            setToastMessage(i18n('error_adding_invoice'));
             setToastOpen(true);
         } finally {
             setLoading(false);
@@ -122,17 +124,16 @@ const AddInvoice = () => {
         >
             <Box display="flex" flexDirection="column" alignItems="flex-start" mb={2} mt={12}>
                 <TextField
-                    label="Date"
+                    label={i18n('date_label')}
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     error={dateError}
-                    helperText={dateError ? 'Date is required' : ''}
+                    helperText={dateError ? i18n('date_required') : ''}
                     className="add-invoice-form__input"
-                    InputLabelProps={{shrink: true}}
                 />
                 <Typography variant="h6" mt={2}>
-                    `Total amount: ${total.toFixed(2)} \$`
+                    {i18n('total_amount_label')}: {total.toFixed(2)}
                 </Typography>
             </Box>
             <Box className="add-invoice-form__line-items">
@@ -146,17 +147,17 @@ const AddInvoice = () => {
                     />
                 ))}
                 <Button onClick={handleAddLineItem} variant="outlined" color="primary" startIcon={<AddIcon/>}>
-                    Add Line Item
+                    {i18n('add_line_item_button')}
                 </Button>
             </Box>
             {lineItemsError && (
                 <Typography color="error" variant="body2" mt={2}>
-                    All line item fields must be filled out and quantities/prices must be greater than zero.
+                    {i18n('all_fields_error')}
                 </Typography>
             )}
             <Box className="add-invoice-form__actions" mt={2} mb={4}>
                 <Button type="submit" variant="contained" color="primary" disabled={loading}>
-                    {loading ? <CircularProgress size={24}/> : 'Add Invoice'}
+                    {loading ? <CircularProgress size={24}/> : i18n('add_invoice_button')}
                 </Button>
             </Box>
             <Toast

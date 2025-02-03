@@ -9,9 +9,7 @@ import MobileMenu from "./MobileMenu";
 import DesktopDeviceMenu from './DesktopDeviceMenu';
 import UserMenu from "./UserMenu";
 
-
 const Header = () => {
-
     return (
         <AppBar position="fixed">
             <Container maxWidth="xl">

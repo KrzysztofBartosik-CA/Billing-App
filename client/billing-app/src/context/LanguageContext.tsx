@@ -1,11 +1,11 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-interface LanguageContextProps {
+export interface LanguageContextProps {
     language: string;
     changeLanguage: (lang: string) => void;
 }
 
-const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
+export const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [language, setLanguage] = useState<string>('en');

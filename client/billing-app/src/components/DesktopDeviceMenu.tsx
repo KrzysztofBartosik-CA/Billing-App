@@ -1,11 +1,12 @@
-// client/billing-app/src/components/DesktopDeviceMenu.tsx
 import React, {FC} from 'react';
 import {Box, Button, Typography} from '@mui/material';
 import {Receipt as ReceiptIcon} from '@mui/icons-material';
 import {menuData} from './menuData';
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from '../hooks/useTranslation';
 
 const DesktopDeviceMenu: FC = () => {
+    const {i18n} = useTranslation();
     const navigate = useNavigate();
     const handleNavigation = (path: string) => {
         navigate(path);
@@ -29,7 +30,7 @@ const DesktopDeviceMenu: FC = () => {
                     textDecoration: 'none',
                 }}
             >
-                Billing App
+                {i18n('billing_app')}
             </Typography>
             <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                 {menuData.map((item) => (
@@ -42,7 +43,7 @@ const DesktopDeviceMenu: FC = () => {
                         }}
                         sx={{my: 2, color: 'white', display: 'block'}}
                     >
-                        {item.label}
+                        {i18n(item.label)}
                     </Button>
                 ))}
             </Box>

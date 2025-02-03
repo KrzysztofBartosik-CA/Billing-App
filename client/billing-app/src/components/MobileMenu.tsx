@@ -1,11 +1,12 @@
-// client/billing-app/src/components/MobileMenu.tsx
 import React from 'react';
 import {Box, IconButton, Menu, MenuItem, Typography} from '@mui/material';
 import {Menu as MenuIcon, Receipt as ReceiptIcon} from '@mui/icons-material';
 import {menuData} from './menuData';
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from '../hooks/useTranslation';
 
 const MobileMenu = () => {
+    const {i18n} = useTranslation();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ const MobileMenu = () => {
                             handleNavigation(item.path)
                         }}>
                             <Typography sx={{textAlign: 'center'}} component="a" href={item.path}>
-                                {item.label}
+                                {i18n(item.label)}
                             </Typography>
                         </MenuItem>
                     ))}
@@ -80,7 +81,7 @@ const MobileMenu = () => {
                     textDecoration: 'none',
                 }}
             >
-                Billing App
+                {i18n('billing_app')}
             </Typography>
         </>
     );

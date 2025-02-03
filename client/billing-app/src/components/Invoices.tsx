@@ -16,9 +16,11 @@ import {
 import {Delete as DeleteIcon} from '@mui/icons-material';
 import {Invoice} from '../types/interfaces';
 import RemovalConfirmation from './RemovalConfirmation';
+import {useTranslation} from '../hooks/useTranslation';
 import './scss/Invoices.scss';
 
 const Invoices = () => {
+    const {i18n} = useTranslation();
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
@@ -33,6 +35,7 @@ const Invoices = () => {
             setInvoices(data);
         } catch (error) {
             console.error('Error fetching invoices:', error);
+            setInvoices([]);
         } finally {
             setLoading(false);
         }
@@ -68,6 +71,19 @@ const Invoices = () => {
         }
     };
 
+    const getStatusColor = (status: string) => {
+        switch (status) {
+            case 'paid':
+                return 'green';
+            case 'unpaid':
+                return 'red';
+            case 'pending':
+                return 'blue';
+            default:
+                return 'black';
+        }
+    };
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -79,7 +95,7 @@ const Invoices = () => {
     if (invoices.length === 0) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <Typography variant="h4" style={{opacity: 0.5}}>No invoices available</Typography>
+                <Typography variant="h4" style={{opacity: 0.5}}>{i18n('no_invoices_available')}</Typography>
             </Box>
         );
     }
@@ -90,11 +106,11 @@ const Invoices = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Invoice Number</TableCell>
-                            <TableCell align="right">Date of Creation</TableCell>
-                            <TableCell align="right">Total Amount</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell>{i18n('invoice_number')}</TableCell>
+                            <TableCell align="right">{i18n('date_of_creation')}</TableCell>
+                            <TableCell align="right">{i18n('total_amount')}</TableCell>
+                            <TableCell>{i18n('status')}</TableCell>
+                            <TableCell>{i18n('actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -107,7 +123,9 @@ const Invoices = () => {
                                 </TableCell>
                                 <TableCell align="right">{new Date(invoice.date).toLocaleDateString()}</TableCell>
                                 <TableCell align="right">{`${invoice.totalAmount} $`}</TableCell>
-                                <TableCell>{invoice.status}</TableCell>
+                                <TableCell style={{color: getStatusColor(invoice.status)}}>
+                                    {i18n(invoice.status)}
+                                </TableCell>
                                 <TableCell>
                                     <IconButton onClick={() => handleDeleteClick(invoice)} color="secondary">
                                         <DeleteIcon/>
