@@ -1,7 +1,6 @@
-// client/billing-app/src/components/AddInvoice.tsx
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {TextField, Button, Box, CircularProgress} from '@mui/material';
+import {TextField, Button, Box, CircularProgress, Typography} from '@mui/material';
 import {Add as AddIcon} from '@mui/icons-material';
 import Toast from './Toast';
 import {AuthContext} from '../context/AuthContext';
@@ -12,7 +11,6 @@ const AddInvoice = () => {
     const authContext = useContext(AuthContext);
     const user = authContext?.user;
     const [date, setDate] = useState('');
-    const [total, setTotal] = useState('');
     const [lineItems, setLineItems] = useState<LineItem[]>([{
         description: '',
         quantity: 0,
@@ -21,12 +19,19 @@ const AddInvoice = () => {
         tax: 0
     }]);
     const [dateError, setDateError] = useState(false);
-    const [totalError, setTotalError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastSeverity, setToastSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
     const [toastOpen, setToastOpen] = useState(false);
+    const [total, setTotal] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const calculateTotalAmount = () => {
+            return lineItems.reduce((sum, item) => sum + item.total, 0);
+        };
+        setTotal(calculateTotalAmount());
+    }, [lineItems]);
 
     const handleLineItemChange = (index: number, field: keyof LineItem, value: string | number) => {
         const newLineItems = [...lineItems];
@@ -52,7 +57,7 @@ const AddInvoice = () => {
         const payload = {
             userId: user?.id,
             date,
-            totalAmount: parseFloat(total),
+            totalAmount: total,
             lineItems,
         }
         return JSON.stringify(payload);
@@ -61,9 +66,8 @@ const AddInvoice = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setDateError(!date);
-        setTotalError(!total);
 
-        if (!date || !total) {
+        if (!date) {
             return;
         }
 
@@ -102,9 +106,10 @@ const AddInvoice = () => {
             onSubmit={handleSubmit}
             className="add-invoice-form"
             display="flex"
-            mt={12}
+            flexDirection="column"
+            justifyContent="flex-start"
         >
-            <Box flex={1} className="add-invoice-form__left">
+            <Box display="flex" flexDirection="column" alignItems="flex-start" mb={2} mt={12}>
                 <TextField
                     label="Date"
                     type="date"
@@ -115,17 +120,11 @@ const AddInvoice = () => {
                     className="add-invoice-form__input"
                     InputLabelProps={{shrink: true}}
                 />
-                <TextField
-                    label="Total Amount"
-                    type="number"
-                    value={total}
-                    onChange={(e) => setTotal(e.target.value)}
-                    error={totalError}
-                    helperText={totalError ? 'Total amount is required' : ''}
-                    className="add-invoice-form__input"
-                />
+                <Typography variant="h6" mt={2}>
+                    Total amount: {total}
+                </Typography>
             </Box>
-            <Box flex={1} className="add-invoice-form__right">
+            <Box className="add-invoice-form__line-items">
                 {lineItems.map((item, index) => (
                     <LineItemComponent
                         key={index}
@@ -135,11 +134,11 @@ const AddInvoice = () => {
                         handleRemoveLineItem={handleRemoveLineItem}
                     />
                 ))}
-                <Button onClick={handleAddLineItem} variant="contained" color="primary" startIcon={<AddIcon/>}>
+                <Button onClick={handleAddLineItem} variant="outlined" color="primary" startIcon={<AddIcon/>}>
                     Add Line Item
                 </Button>
             </Box>
-            <Box className="add-invoice-form__actions">
+            <Box className="add-invoice-form__actions" mt={2} mb={4}>
                 <Button type="submit" variant="contained" color="primary" disabled={loading}>
                     {loading ? <CircularProgress size={24}/> : 'Add Invoice'}
                 </Button>

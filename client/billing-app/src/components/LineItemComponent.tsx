@@ -25,7 +25,7 @@ interface LineItemProps {
 
 const LineItemComponent: React.FC<LineItemProps> = ({item, index, handleLineItemChange, handleRemoveLineItem}) => {
     return (
-        <Box key={index} display="flex" alignItems="center" className="line-item-group">
+        <Box key={index} display="flex" alignItems="center" className="line-item-group" mb={2} gap={2}>
             <TextField
                 label="Description"
                 value={item.description}
