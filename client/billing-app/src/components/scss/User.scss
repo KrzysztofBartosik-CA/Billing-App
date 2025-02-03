@@ -1,0 +1,24 @@
+.user {
+    &__title {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    &__label {
+        display: flex;
+        flex-direction: column;
+    }
+    &__input {
+        padding: 8px;
+        font-size: 16px;
+    }
+    &__button {
+        align-self: flex-start;
+        padding: 8px 16px;
+        font-size: 16px;
+    }
+}

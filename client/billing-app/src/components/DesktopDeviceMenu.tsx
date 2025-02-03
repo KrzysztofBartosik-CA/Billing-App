@@ -1,8 +1,8 @@
+// client/billing-app/src/components/DesktopDeviceMenu.tsx
 import React, {FC} from 'react';
 import {Box, Button, Typography} from '@mui/material';
 import {Receipt as ReceiptIcon} from '@mui/icons-material';
-
-const pages = ['Products', 'Pricing', 'Blog'];
+import {menuData} from './menuData';
 
 const DesktopDeviceMenu: FC = () => {
     const handleCloseNavMenu = () => {
@@ -16,7 +16,7 @@ const DesktopDeviceMenu: FC = () => {
                 variant="h6"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                     mr: 2,
                     display: {xs: 'none', md: 'flex'},
@@ -30,13 +30,14 @@ const DesktopDeviceMenu: FC = () => {
                 Billing App
             </Typography>
             <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                {pages.map((page: string) => (
+                {menuData.map((item) => (
                     <Button
-                        key={page}
+                        key={item.path}
+                        href={item.path}
                         onClick={handleCloseNavMenu}
                         sx={{my: 2, color: 'white', display: 'block'}}
                     >
-                        {`${page} 1`}
+                        {item.label}
                     </Button>
                 ))}
             </Box>

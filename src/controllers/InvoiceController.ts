@@ -5,6 +5,7 @@ import Invoice from '../models/Invoice';
 
 export const createInvoice = async (req: Request, res: Response) => {
     try {
+        console.log(req.body);
         const invoiceData = {
             userId: new mongoose.Types.ObjectId(req.body.userId),
             invoiceNumber: validator.escape(req.body.invoiceNumber),

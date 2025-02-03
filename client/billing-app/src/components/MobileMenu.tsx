@@ -1,18 +1,17 @@
+// client/billing-app/src/components/MobileMenu.tsx
 import React from 'react';
 import {Box, IconButton, Menu, MenuItem, Typography} from '@mui/material';
 import {Menu as MenuIcon, Receipt as ReceiptIcon} from '@mui/icons-material';
-
-const pages = ['Products', 'Pricing', 'Blog'];
+import {menuData} from './menuData';
 
 const MobileMenu = () => {
-
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
-    const handleCloseNavMenu = (event: any) => {
+    const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
@@ -45,20 +44,21 @@ const MobileMenu = () => {
                     onClose={handleCloseNavMenu}
                     sx={{display: {xs: 'block', md: 'none'}}}
                 >
-                    {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                            <Typography sx={{textAlign: 'center'}}>{page}</Typography>
+                    {menuData.map((item) => (
+                        <MenuItem key={item.path} onClick={handleCloseNavMenu}>
+                            <Typography sx={{textAlign: 'center'}} component="a" href={item.path}>
+                                {item.label}
+                            </Typography>
                         </MenuItem>
                     ))}
                 </Menu>
-
             </Box>
             <ReceiptIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
             <Typography
                 variant="h5"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                     mr: 2,
                     display: {xs: 'flex', md: 'none'},
@@ -70,10 +70,9 @@ const MobileMenu = () => {
                     textDecoration: 'none',
                 }}
             >
-                LOGO
+                Billing App
             </Typography>
         </>
-
     );
 };
 
