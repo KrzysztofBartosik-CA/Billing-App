@@ -6,6 +6,7 @@ import invoiceRoutes from './routes/invoiceRoutes';
 import changeRequestRoutes from './routes/changeRequestRoutes';
 import refundRequestRoutes from './routes/refundRequestRoutes';
 import authRoutes from './routes/authRoutes';
+import userRoutes from "./routes/userRoutes";
 
 const app = express();
 const port = 2000;
@@ -39,6 +40,7 @@ app.use('/invoices', invoiceRoutes);
 app.use('/change-requests', changeRequestRoutes);
 app.use('/refund-requests', refundRequestRoutes);
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => {

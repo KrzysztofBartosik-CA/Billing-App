@@ -9,7 +9,8 @@ export const createInvoice = async (req: Request, res: Response) => {
         const userId = new mongoose.Types.ObjectId(req.body.userId);
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: 'User not found' });
+            return;
         }
 
         const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
@@ -22,7 +23,7 @@ export const createInvoice = async (req: Request, res: Response) => {
             }
         });
 
-        const invoiceNumber = `INV/${user.username}/${currentMonth}/${currentYear}/${invoiceCount + 1}`;
+        const invoiceNumber = `INV/${user.username.toUpperCase()}/${currentMonth}/${currentYear}/${invoiceCount + 1}`;
 
         const invoiceData = {
             userId,

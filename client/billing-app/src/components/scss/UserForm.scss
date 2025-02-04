@@ -1,0 +1,16 @@
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.user-form__input {
+  max-width: 300px;
+  width: 100%;
+}
+
+.user-form__button {
+  align-self: center;
+}
