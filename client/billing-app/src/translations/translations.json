@@ -87,7 +87,11 @@
     "user_panel": "User panel",
     "paid": "Paid",
     "unpaid": "Unpaid",
-    "pending": "Pending"
+    "pending": "Pending",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "address": "Address",
+    "email_required": "Email is required"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -177,7 +181,11 @@
     "user_panel": "Panel użytkownika",
     "paid": "Zapłacone",
     "unpaid": "Niezapłacone",
-    "pending": "Oczekujące"
+    "pending": "Oczekujące",
+    "first_name": "Imię",
+    "last_name": "Nazwisko",
+    "address": "Adres",
+    "email_required": "Email jest wymagany"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -267,6 +275,10 @@
     "user_panel": "Benutzerpanel",
     "paid": "Bezahlt",
     "unpaid": "Unbezahlt",
-    "pending": "Ausstehend"
+    "pending": "Ausstehend",
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "address": "Adresse",
+    "email_required": "Email ist erforderlich"
   }
 }
