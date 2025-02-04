@@ -4,12 +4,11 @@ import UserForm from './UserForm';
 import './scss/User.scss';
 import { Box, CircularProgress } from '@mui/material';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import useAuth from "../hooks/useAuth";
 
 const User = () => {
     const { i18n } = useTranslation();
-    const authContext = useContext(AuthContext);
-    const user = authContext?.user;
+    const {user} = useAuth();
     const [userData, setUserData] = useState({
         username: '',
         password: '',

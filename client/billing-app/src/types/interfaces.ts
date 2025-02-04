@@ -15,3 +15,13 @@ export interface Invoice {
     status: 'paid' | 'unpaid' | 'pending';
     lineItems: LineItem[];
 }
+
+export interface User {
+    id: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    email: string;
+    role: "admin" | "user";
+}

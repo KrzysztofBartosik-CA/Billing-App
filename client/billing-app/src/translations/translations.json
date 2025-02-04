@@ -97,7 +97,8 @@
     "new_password": "New Password",
     "successfully_change_password": "Password successfully changed",
     "error_changing_password": "Old password is incorrect",
-    "total_unpaid_amount": "Total unpaid amount"
+    "total_unpaid_amount": "Total unpaid amount",
+    "select_user": "Select user"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -197,7 +198,8 @@
     "new_password": "Nowe hasło",
     "successfully_change_password": "Hasło zostało pomyślnie zmienione",
     "old_password_incorrect": "Stare hasło jest nieprawidłowe",
-    "total_unpaid_amount": "Całkowita niezapłacona kwota"
+    "total_unpaid_amount": "Całkowita niezapłacona kwota",
+    "select_user": "Wybierz użytkownika"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -297,6 +299,7 @@
     "new_password": "Neues Passwort",
     "successfully_change_password": "Passwort erfolgreich geändert",
     "old_password_incorrect": "Altes Passwort ist falsch",
-    "total_unpaid_amount": "Gesamtbetrag der unbezahlten Rechnungen"
+    "total_unpaid_amount": "Gesamtbetrag der unbezahlten Rechnungen",
+    "select_user": "Benutzer auswählen"
   }
 }

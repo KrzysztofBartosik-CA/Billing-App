@@ -1,18 +1,20 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {TextField, Button, Box, CircularProgress, Typography} from '@mui/material';
+import {TextField, Button, Box, CircularProgress, Typography, MenuItem} from '@mui/material';
 import {Add as AddIcon} from '@mui/icons-material';
 import Toast from './Toast';
-import {AuthContext} from '../context/AuthContext';
 import {LineItemComponent, LineItem} from "./LineItemComponent";
 import {useTranslation} from '../hooks/useTranslation';
 import './scss/AddInvoice.scss';
+import useAuth from "../hooks/useAuth";
+import {User} from "../types/interfaces";
 
 const AddInvoice = () => {
     const {i18n} = useTranslation();
-    const authContext = useContext(AuthContext);
-    const user = authContext?.user;
+    const {isAdmin} = useAuth();
     const [date, setDate] = useState('');
+    const [selectedUser, setSelectedUser] = useState('');
+    const [users, setUsers] = useState([]);
     const [lineItems, setLineItems] = useState<LineItem[]>([{
         description: '',
         quantity: 0,
@@ -28,6 +30,22 @@ const AddInvoice = () => {
     const [toastOpen, setToastOpen] = useState(false);
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('http://localhost:2000/users', {
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
 
     useEffect(() => {
         const calculateTotalAmount = () => {
@@ -65,7 +83,7 @@ const AddInvoice = () => {
 
     const createInvoicePayload = () => {
         const payload = {
-            userId: user?.id,
+            userId: selectedUser,
             date,
             totalAmount: total,
             lineItems,
@@ -113,6 +131,56 @@ const AddInvoice = () => {
         }
     };
 
+    if (!isAdmin) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <Typography variant="h4" color="error">
+                    {i18n('no_permission_to_add_invoices')}
+                </Typography>
+            </Box>
+        );
+    }
+
+    const renderUserOptions = (users: User[]) => {
+        const userNames = users.map((user: User) => {
+            const {id, firstName, lastName, username} = user;
+            const realName = `${firstName || ''} ${lastName || ''}`;
+            return (
+                <MenuItem key={id} value={id}>
+                    {`${username} - ${realName}`}
+                </MenuItem>
+            )
+        });
+
+        return(
+            <TextField
+                select
+                label={i18n('select_user')}
+                value={selectedUser || ''}
+                onChange={(e) => {
+                    console.log(e);
+                    setSelectedUser(e.target.value)
+                }}
+                className="add-invoice-form__input"
+            >
+                {userNames}
+            </TextField>
+        )
+    };
+
+    const renderDatePicker = () => (
+        <TextField
+            label={i18n('date_label')}
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            error={dateError}
+            helperText={dateError ? i18n('date_required') : ''}
+            slotProps={{ inputLabel: { shrink: true } }}
+            className="add-invoice-form__input"
+        />
+    );
+
     return (
         <Box
             component="form"
@@ -122,19 +190,11 @@ const AddInvoice = () => {
             flexDirection="column"
             justifyContent="flex-start"
         >
-            <Box display="flex" flexDirection="column" alignItems="flex-start" mb={2} mt={12}>
-                <TextField
-                    label={i18n('date_label')}
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    error={dateError}
-                    helperText={dateError ? i18n('date_required') : ''}
-                    slotProps={{ inputLabel: { shrink: true } }}
-                    className="add-invoice-form__input"
-                />
+            <Box display="flex" flexDirection="row" alignItems="flex-start" mb={2} mt={12} gap={2}>
+                {renderUserOptions(users)}
+                {renderDatePicker()}
                 <Typography variant="h6" mt={2}>
-                    {i18n('total_amount_label')}: {total.toFixed(2)}
+                    {`${i18n('total_amount_label')}: ${total.toFixed(2)}`}
                 </Typography>
             </Box>
             <Box className="add-invoice-form__line-items">

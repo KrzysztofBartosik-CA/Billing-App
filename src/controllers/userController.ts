@@ -8,6 +8,16 @@ interface AuthenticatedRequest extends Request {
     };
 }
 
+export const formatUser = (user: any) => ({
+    id: user._id,
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    address: user.address,
+    email: user.email,
+    role: user.role
+});
+
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -23,7 +33,8 @@ export const createUser = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
     try {
         const users = await User.find();
-        res.status(200).send(users);
+        const formattedUsers = users.map(formatUser);
+        res.status(200).send(formattedUsers);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -37,7 +48,7 @@ export const getUserById = async (req: Request, res: Response) => {
             res.status(404).send();
             return;
         }
-        res.status(200).send(user);
+        res.status(200).send(formatUser(user));
     } catch (error) {
         res.status(500).send(error);
     }
@@ -66,7 +77,7 @@ export const deleteUser = async (req: Request, res: Response) => {
             res.status(404).send();
             return;
         }
-        res.status(200).send(user);
+        res.status(200).send(formatUser(user));
     } catch (error) {
         res.status(500).send(error);
     }

@@ -4,19 +4,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import dotenv from 'dotenv';
+import {formatUser} from "./userController";
 
 dotenv.config();
 
 const secret = process.env.JWT_SECRET || 'default_secret';
-
-const formatUser = (user: any) => ({
-    id: user._id,
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    address: user.address,
-    email: user.email
-});
 
 export const register = async (req: Request, res: Response) => {
     try {

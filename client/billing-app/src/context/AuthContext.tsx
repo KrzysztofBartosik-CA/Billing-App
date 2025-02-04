@@ -1,14 +1,7 @@
 import React, {createContext, useState, useEffect, ReactNode} from 'react';
 import {checkAuth, login, logout} from '../services/authService';
+import {User} from "../types/interfaces";
 
-interface User {
-    id: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    address: string;
-    email: string;
-}
 
 interface AuthContextType {
     isAuthenticationInProgress: boolean;

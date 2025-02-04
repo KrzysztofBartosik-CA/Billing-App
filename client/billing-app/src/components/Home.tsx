@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 import Header from './Header';
 import User from './User';
 import Invoices from './Invoices';
@@ -11,16 +11,13 @@ import './scss/Home.scss';
 import ChangePassword from "./ChangePassword";
 
 const Home = () => {
-    const authContext = useContext(AuthContext);
+    const {isAuthenticated, isAuthenticationInProgress} = useAuth();
     const navigate = useNavigate();
 
-    if (!authContext?.isAuthenticated) {
-        if (!authContext || authContext.isAuthenticationInProgress) {
+    if (!isAuthenticated) {
+        if (isAuthenticationInProgress) {
             return <div>Loading...</div>;
         }
-    }
-
-    if (!authContext.isAuthenticated) {
         navigate('/login');
     }
 
@@ -33,7 +30,7 @@ const Home = () => {
                     <Route path="invoices" element={<Invoices/>}/>
                     <Route path="invoice/:id" element={<InvoiceDetails/>}/>
                     <Route path="add-invoice" element={<AddInvoice/>}/>
-                    <Route path="change-password" element={<ChangePassword />} />
+                    <Route path="change-password" element={<ChangePassword/>}/>
                     <Route path="*" element={<Welcome/>}/>
                 </Routes>
             </div>
