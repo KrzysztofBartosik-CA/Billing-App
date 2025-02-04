@@ -91,7 +91,12 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "address": "Address",
-    "email_required": "Email is required"
+    "email_required": "Email is required",
+    "change_password": "Change Password",
+    "old_password": "Old Password",
+    "new_password": "New Password",
+    "successfully_change_password": "Password successfully changed",
+    "error_changing_password": "Old password is incorrect"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -185,7 +190,12 @@
     "first_name": "Imię",
     "last_name": "Nazwisko",
     "address": "Adres",
-    "email_required": "Email jest wymagany"
+    "email_required": "Email jest wymagany",
+    "change_password": "Zmień hasło",
+    "old_password": "Stare hasło",
+    "new_password": "Nowe hasło",
+    "successfully_change_password": "Hasło zostało pomyślnie zmienione",
+    "old_password_incorrect": "Stare hasło jest nieprawidłowe"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -279,6 +289,11 @@
     "first_name": "Vorname",
     "last_name": "Nachname",
     "address": "Adresse",
-    "email_required": "Email ist erforderlich"
+    "email_required": "Email ist erforderlich",
+    "change_password": "Passwort ändern",
+    "old_password": "Altes Passwort",
+    "new_password": "Neues Passwort",
+    "successfully_change_password": "Passwort erfolgreich geändert",
+    "old_password_incorrect": "Altes Passwort ist falsch"
   }
 }

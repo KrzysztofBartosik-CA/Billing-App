@@ -8,6 +8,7 @@ import InvoiceDetails from './InvoiceDetails';
 import AddInvoice from './AddInvoice';
 import Welcome from "./Welcome";
 import './scss/Home.scss';
+import ChangePassword from "./ChangePassword";
 
 const Home = () => {
     const authContext = useContext(AuthContext);
@@ -32,6 +33,7 @@ const Home = () => {
                     <Route path="invoices" element={<Invoices/>}/>
                     <Route path="invoice/:id" element={<InvoiceDetails/>}/>
                     <Route path="add-invoice" element={<AddInvoice/>}/>
+                    <Route path="change-password" element={<ChangePassword />} />
                     <Route path="*" element={<Welcome/>}/>
                 </Routes>
             </div>
