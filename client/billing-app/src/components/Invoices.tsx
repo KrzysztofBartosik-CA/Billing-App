@@ -17,10 +17,12 @@ import {Delete as DeleteIcon} from '@mui/icons-material';
 import {Invoice} from '../types/interfaces';
 import RemovalConfirmation from './RemovalConfirmation';
 import {useTranslation} from '../hooks/useTranslation';
+import useAuth from '../hooks/useAuth';
 import './scss/Invoices.scss';
 
 const Invoices = () => {
     const {i18n} = useTranslation();
+    const {isAdmin} = useAuth();
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
@@ -136,9 +138,11 @@ const Invoices = () => {
                                     {i18n(invoice.status)}
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton onClick={() => handleDeleteClick(invoice)} color="secondary">
-                                        <DeleteIcon/>
-                                    </IconButton>
+                                    {isAdmin && (
+                                        <IconButton onClick={() => handleDeleteClick(invoice)} color="error">
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}

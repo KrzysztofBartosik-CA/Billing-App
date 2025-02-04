@@ -3,13 +3,14 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import Invoice from '../models/Invoice';
 import User from "../models/User";
+import {AuthenticatedRequest, User as UserType} from "../types/userTypes";
 
 export const createInvoice = async (req: Request, res: Response) => {
     try {
         const userId = new mongoose.Types.ObjectId(req.body.userId);
         const user = await User.findById(userId);
         if (!user) {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({error: 'User not found'});
             return;
         }
 
@@ -45,13 +46,23 @@ export const createInvoice = async (req: Request, res: Response) => {
         res.status(201).json(savedInvoice);
     } catch (error) {
         console.error('Error saving invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
-export const getInvoices = async (req: Request, res: Response) => {
+export const getInvoices = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const invoices = await Invoice.find();
+        const {user} = req;
+        const userId = user?._id;
+        const userRole = user?.role;
+
+        let invoices;
+        if (userRole === 'admin') {
+            invoices = await Invoice.find();
+        } else {
+            invoices = await Invoice.find({userId});
+        }
+
         res.status(200).json(invoices);
     } catch (error) {
         console.error('Error fetching invoices:', error);

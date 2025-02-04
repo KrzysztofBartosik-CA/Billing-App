@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import dotenv from 'dotenv';
 import {formatUser} from "./userController";
+import {AuthenticatedRequest} from "../types/userTypes";
 
 dotenv.config();
 
@@ -57,9 +58,9 @@ export const login = async (req: Request, res: Response) => {
     }
 };
 
-export const checkAuth = async (req: Request, res: Response) => {
+export const checkAuth = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const userId = (req as any).user.userId;
+        const userId = req.user?._id;
         const user = await User.findById(userId).select('-password');
         if (!user) {
             res.status(401).json({isAuthenticated: false});
