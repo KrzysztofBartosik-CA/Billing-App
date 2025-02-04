@@ -130,6 +130,7 @@ const AddInvoice = () => {
                     onChange={(e) => setDate(e.target.value)}
                     error={dateError}
                     helperText={dateError ? i18n('date_required') : ''}
+                    slotProps={{ inputLabel: { shrink: true } }}
                     className="add-invoice-form__input"
                 />
                 <Typography variant="h6" mt={2}>

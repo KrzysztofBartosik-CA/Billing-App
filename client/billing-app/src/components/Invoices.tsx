@@ -25,6 +25,12 @@ const Invoices = () => {
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+    const [totalUnpaidAmount, setTotalUnpaidAmount] = useState(0);
+
+    const calculateUnpaidAmount = (data: Invoice[]) => {
+        return data.filter((invoice: Invoice) => invoice.status === 'unpaid')
+            .reduce((sum: number, invoice: Invoice) => sum + invoice.totalAmount, 0);
+    }
 
     const fetchInvoices = async () => {
         try {
@@ -33,9 +39,12 @@ const Invoices = () => {
             });
             const data = await response.json();
             setInvoices(data);
+            const unpaidAmount = calculateUnpaidAmount(data);
+            setTotalUnpaidAmount(unpaidAmount);
         } catch (error) {
             console.error('Error fetching invoices:', error);
             setInvoices([]);
+            setTotalUnpaidAmount(0);
         } finally {
             setLoading(false);
         }
@@ -135,6 +144,11 @@ const Invoices = () => {
                         ))}
                     </TableBody>
                 </Table>
+                <Box p={2}>
+                    <Typography variant="h6">
+                        {i18n('total_unpaid_amount')}: {totalUnpaidAmount.toFixed(2)} $
+                    </Typography>
+                </Box>
             </TableContainer>
             <RemovalConfirmation
                 open={open}
