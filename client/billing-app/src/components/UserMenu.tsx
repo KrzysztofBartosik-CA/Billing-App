@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Box, Tooltip, IconButton, Avatar, Menu, MenuItem, Typography} from '@mui/material';
 import {useNavigate} from "react-router-dom";
 import {logout} from "../services/authService";
 import {useTranslation} from '../hooks/useTranslation';
+import {AuthContext} from "../context/AuthContext";
 
 const UserMenu = () => {
     const {i18n} = useTranslation();
+    const authContext = useContext(AuthContext);
+    const user = authContext?.user;
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
 
@@ -36,7 +39,7 @@ const UserMenu = () => {
         <Box sx={{flexGrow: 0}}>
             <Tooltip title={i18n('user_panel')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                    <Avatar alt="User Avatar"/>
+                    <Avatar>{user?.username.charAt(0).toUpperCase()}</Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
