@@ -98,7 +98,8 @@
     "successfully_change_password": "Password successfully changed",
     "error_changing_password": "Old password is incorrect",
     "total_unpaid_amount": "Total unpaid amount",
-    "select_user": "Select user"
+    "select_user": "Select user",
+    "price_incl_tax": "Price incl. tax"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -199,7 +200,8 @@
     "successfully_change_password": "Hasło zostało pomyślnie zmienione",
     "old_password_incorrect": "Stare hasło jest nieprawidłowe",
     "total_unpaid_amount": "Całkowita niezapłacona kwota",
-    "select_user": "Wybierz użytkownika"
+    "select_user": "Wybierz użytkownika",
+    "price_incl_tax": "Cena z podatkiem"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -300,6 +302,7 @@
     "successfully_change_password": "Passwort erfolgreich geändert",
     "old_password_incorrect": "Altes Passwort ist falsch",
     "total_unpaid_amount": "Gesamtbetrag der unbezahlten Rechnungen",
-    "select_user": "Benutzer auswählen"
+    "select_user": "Benutzer auswählen",
+    "price_incl_tax": "Preis inkl. Steuer"
   }
 }

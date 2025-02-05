@@ -59,7 +59,7 @@ const InvoiceDetails = () => {
 
     return (
         <div className="invoice-details">
-            <Box display="flex" alignItems="center" mb={2}>
+            <Box display="flex" alignItems="center" mb={2} mt={12}>
                 <Button component={Link} to="/invoices" variant="outlined" color="secondary">
                     {i18n('back_to_invoices')}
                 </Button>
@@ -84,7 +84,7 @@ const InvoiceDetails = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell>{i18n('status')}</TableCell>
-                            <TableCell>{invoice.status}</TableCell>
+                            <TableCell>{i18n(invoice.status)}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -99,6 +99,7 @@ const InvoiceDetails = () => {
                             <TableCell>{i18n('description')}</TableCell>
                             <TableCell>{i18n('quantity')}</TableCell>
                             <TableCell>{i18n('price')}</TableCell>
+                            <TableCell>{i18n('price_incl_tax')}</TableCell>
                             <TableCell>{i18n('total')}</TableCell>
                             <TableCell>{i18n('tax')}</TableCell>
                         </TableRow>
@@ -108,9 +109,10 @@ const InvoiceDetails = () => {
                             <TableRow key={index}>
                                 <TableCell>{item.description}</TableCell>
                                 <TableCell>{item.quantity}</TableCell>
-                                <TableCell>{item.price}</TableCell>
-                                <TableCell>{item.total}</TableCell>
-                                <TableCell>{item.tax}</TableCell>
+                                <TableCell>{`${item.price.toFixed(2)} $`}</TableCell>
+                                <TableCell>{`${(item.price + item.price * item.tax).toFixed(2)} $`}</TableCell>
+                                <TableCell>{`${item.total} $`}</TableCell>
+                                <TableCell>{(item.tax * 100).toFixed(2)}%</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
