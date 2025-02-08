@@ -130,7 +130,7 @@ const ChangeRequests = () => {
                                             <Box display="flex" gap={1}>
                                                 <Button onClick={() => handleOpenCompareModal(request)}>{i18n('compare')}</Button>
                                                 <Button variant="contained" color="success" onClick={() => handleOpenConfirmDialog(() => handleAcceptRequest(request._id), i18n('confirm_action'), i18n('are_you_sure_confirm'), i18n('accept'))}>{i18n('accept')}</Button>
-                                                <Button variant="outlined" color="error" onClick={() => handleOpenConfirmDialog(() => handleDiscardRequest(request._id), i18n('discard_action'), i18n('are_you_sure_discard'), i18n('discard'))}>{i18n('discard')}</Button>
+                                                <Button variant="outlined" color="error" onClick={() => handleOpenConfirmDialog(() => handleDiscardRequest(request._id), i18n('discard_action'), i18n('are_you_sure_discard'), i18n('discard')}>{i18n('discard')}</Button>
                                             </Box>
                                         </TableCell>
                                     </TableRow>

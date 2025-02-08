@@ -47,11 +47,10 @@ const ChangeRequests = () => {
         setSelectedRequest(null);
     };
 
-    const handleOpenConfirmDialog = (action: () => void, title: string, message: string, btnMessage: string) => {
+    const handleOpenConfirmDialog = (action: () => void, title: string, message: string) => {
         setConfirmAction(() => action);
         setDialogTitle(title);
         setDialogMessage(message);
-        setDialogBtnMessage(btnMessage);
         setOpenConfirmDialog(true);
     };
 
@@ -129,8 +128,8 @@ const ChangeRequests = () => {
                                         <TableCell>
                                             <Box display="flex" gap={1}>
                                                 <Button onClick={() => handleOpenCompareModal(request)}>{i18n('compare')}</Button>
-                                                <Button variant="contained" color="success" onClick={() => handleOpenConfirmDialog(() => handleAcceptRequest(request._id), i18n('confirm_action'), i18n('are_you_sure_confirm'), i18n('accept'))}>{i18n('accept')}</Button>
-                                                <Button variant="outlined" color="error" onClick={() => handleOpenConfirmDialog(() => handleDiscardRequest(request._id), i18n('discard_action'), i18n('are_you_sure_discard'), i18n('discard'))}>{i18n('discard')}</Button>
+                                                <Button variant="contained" color="success" onClick={() => handleOpenConfirmDialog(() => handleAcceptRequest(request._id), i18n('confirm_action'), i18n('are_you_sure_confirm'))}>{i18n('accept')}</Button>
+                                                <Button variant="outlined" color="error" onClick={() => handleOpenConfirmDialog(() => handleDiscardRequest(request._id), i18n('discard_action'), i18n('are_you_sure_discard'))}>{i18n('discard')}</Button>
                                             </Box>
                                         </TableCell>
                                     </TableRow>
@@ -142,7 +141,7 @@ const ChangeRequests = () => {
                 )}
             </Box>
             <CompareInvoicesModal open={openCompareModal} onClose={handleCloseCompareModal} request={selectedRequest} />
-            <ConfirmDialog open={openConfirmDialog} onClose={handleCloseConfirmDialog} onConfirm={() => { confirmAction(); handleCloseConfirmDialog(); }} title={dialogTitle} message={dialogMessage} btnMessage={dialogBtnMessage} />
+            <ConfirmDialog open={openConfirmDialog} onClose={handleCloseConfirmDialog} onConfirm={() => { confirmAction(); handleCloseConfirmDialog(); }} title={dialogTitle} message={dialogMessage} />
         </div>
     );
 };

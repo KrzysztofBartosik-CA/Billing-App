@@ -8,10 +8,9 @@ interface ConfirmDialogProps {
     onConfirm: () => void;
     title: string;
     message: string;
-    btnMessage: string;
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ open, onClose, onConfirm, title, message, btnMessage }) => {
+const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ open, onClose, onConfirm, title, message }) => {
     const { i18n } = useTranslation();
 
     return (
@@ -25,7 +24,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ open, onClose, onConfirm,
                     {i18n('cancel')}
                 </Button>
                 <Button onClick={onConfirm} variant='contained' color="primary">
-                    {btnMessage}
+                    {i18n('confirm')}
                 </Button>
             </DialogActions>
         </Dialog>

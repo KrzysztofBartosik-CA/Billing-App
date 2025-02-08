@@ -159,7 +159,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoice, setInvoiceData, onSu
             return format(date, 'yyyy-MM-dd');
         };
 
-        const formattedDate = invoice?.date ? formatDate(invoice.date) : date;
+        const formattedDate = invoice?.date ? formatDate(invoice.date) : newInvoice.date;
         return (
             <TextField
                 label={i18n('date_label')}
