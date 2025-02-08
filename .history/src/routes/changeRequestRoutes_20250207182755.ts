@@ -1,5 +1,5 @@
 import {RequestHandler, Router} from 'express';
-import { createChangeRequest, getChangeRequests, getChangeRequestById, updateChangeRequest, deleteChangeRequest, acceptChangeRequest } from '../controllers/ChangeRequestController';
+import { createChangeRequest, getChangeRequests, getChangeRequestById, updateChangeRequest, deleteChangeRequest } from '../controllers/ChangeRequestController';
 import { authenticate } from '../middleware/authMiddleware';
 
 const router = Router();
@@ -9,6 +9,5 @@ router.get('/', authenticate as RequestHandler, getChangeRequests);
 router.get('/:id', authenticate as RequestHandler, getChangeRequestById);
 router.put('/:id', authenticate as RequestHandler, updateChangeRequest);
 router.delete('/:id', authenticate as RequestHandler, deleteChangeRequest);
-router.post('/:id/accept', authenticate as RequestHandler, acceptChangeRequest);
 
 export default router;

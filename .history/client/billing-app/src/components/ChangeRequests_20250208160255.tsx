@@ -99,7 +99,7 @@ const ChangeRequests = () => {
 
     return (
         <div className="change-requests">
-            <Box display="flex" justifyContent="center" flexDirection="column" mt={12} ml={4} mr={4}>
+            <Box display="flex" justifyContent="center" flexDirection="row" mt={12} ml={4} mr={4}>
                 <Typography variant="h4" mb={4}>{i18n('change_requests')}</Typography>
                 {changeRequests.length === 0 ? (
                     <Typography variant="h6" align="center">{i18n('no_change_requests')}</Typography>

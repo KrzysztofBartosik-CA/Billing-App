@@ -99,11 +99,11 @@ const ChangeRequests = () => {
 
     return (
         <div className="change-requests">
-            <Box display="flex" justifyContent="center" flexDirection="column" mt={12} ml={4} mr={4}>
-                <Typography variant="h4" mb={4}>{i18n('change_requests')}</Typography>
-                {changeRequests.length === 0 ? (
-                    <Typography variant="h6" align="center">{i18n('no_change_requests')}</Typography>
-                ) : (
+            <Typography variant="h4" mb={4} mt={12}>{i18n('change_requests')}</Typography>
+            {changeRequests.length === 0 ? (
+                <Typography variant="h6" align="center">{i18n('no_change_requests')}</Typography>
+            ) : (
+                <Box display={{ xs: 'block', md: 'flex' }} justifyContent="center" ml={4} mr={4}>
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>
@@ -136,9 +136,8 @@ const ChangeRequests = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-
-                )}
-            </Box>
+                </Box>
+            )}
             <CompareInvoicesModal open={openCompareModal} onClose={handleCloseCompareModal} request={selectedRequest} />
             <ConfirmDialog open={openConfirmDialog} onClose={handleCloseConfirmDialog} onConfirm={() => { confirmAction(); handleCloseConfirmDialog(); }} title={dialogTitle} message={dialogMessage} />
         </div>

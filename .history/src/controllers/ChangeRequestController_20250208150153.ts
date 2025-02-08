@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import ChangeRequest from '../models/ChangeRequest';
 import Invoice from '../models/Invoice';
-import { Invoice as InvoiceType, LineItem as LineItemType } from '../types/invoiceTypes';
-import { ChangeRequestTypeResponse } from '../types/changeRequestTypes';
 
 export const createChangeRequest = async (req: Request, res: Response) => {
     try {
@@ -41,6 +39,7 @@ export const createChangeRequest = async (req: Request, res: Response) => {
         await invoice.save();
 
         res.status(201).json(savedChangeRequest);
+        return;
     } catch (error) {
         console.error('Error saving change request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -87,25 +86,12 @@ export const updateChangeRequest = async (req: Request, res: Response): Promise<
 
 export const deleteChangeRequest = async (req: Request, res: Response): Promise<void> => {
     try {
-        const changeRequest: ChangeRequestTypeResponse | null = await ChangeRequest.findById(req.params.id);
-        if (!changeRequest) {
+        const deletedChangeRequest = await ChangeRequest.findByIdAndDelete(req.params.id);
+        if (!deletedChangeRequest) {
             res.status(404).json({ message: 'Change Request not found' });
             return;
         }
-
-        const invoice = await Invoice.findById(changeRequest.invoiceId);
-        let invoiceNotFoundMsg = '';
-        if (invoice) {
-            // Update the invoice status to the status stored in updatedInvoice.status
-            invoiceNotFoundMsg = 'Invoice not found';
-            invoice.status = changeRequest.updatedInvoice.status;
-            await invoice.save();
-        }
-
-        // Delete the change request
-        await ChangeRequest.findByIdAndDelete(req.params.id);
-        const msg = 'Change Request deleted. ' + invoiceNotFoundMsg;
-        res.json({ message: msg });
+        res.json({ message: 'Change Request deleted successfully' });
     } catch (error) {
         console.error('Error deleting change request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -114,7 +100,7 @@ export const deleteChangeRequest = async (req: Request, res: Response): Promise<
 
 export const acceptChangeRequest = async (req: Request, res: Response): Promise<void> => {
     try {
-        const changeRequest: ChangeRequestTypeResponse | null = await ChangeRequest.findById(req.params.id);
+        const changeRequest: ChangeRequest = await ChangeRequest.findById(req.params.id);
         if (!changeRequest) {
             res.status(404).json({ message: 'Change Request not found' });
             return;
@@ -127,12 +113,12 @@ export const acceptChangeRequest = async (req: Request, res: Response): Promise<
         }
 
         // Update the invoice with the changes
-        invoice.userId = new mongoose.Types.ObjectId(changeRequest.updatedInvoice.userId);
+        invoice.userId = changeRequest.updatedInvoice.userId;
         invoice.date = changeRequest.updatedInvoice.date;
         invoice.totalAmount = changeRequest.updatedInvoice.totalAmount;
         invoice.invoiceNumber = changeRequest.updatedInvoice.invoiceNumber;
         invoice.status = changeRequest.updatedInvoice.status;
-        invoice.lineItems = new mongoose.Types.DocumentArray(changeRequest.updatedInvoice.lineItems);
+        invoice.lineItems = changeRequest.updatedInvoice.lineItems;
 
         await invoice.save();
 
