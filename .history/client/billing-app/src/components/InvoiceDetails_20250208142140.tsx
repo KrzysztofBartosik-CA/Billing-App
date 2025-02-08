@@ -27,7 +27,6 @@ const InvoiceDetails = () => {
     const navigate = useNavigate(); // Use useNavigate hook
 
     const fetchInvoice = async () => {
-        setLoading(true);
         try {
             const response = await fetch(`http://localhost:2000/invoices/${id}`, {
                 credentials: 'include',

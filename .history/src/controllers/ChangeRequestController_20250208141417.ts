@@ -8,8 +8,7 @@ export const createChangeRequest = async (req: Request, res: Response) => {
     try {
         const invoice = await Invoice.findById(req.body.invoiceId);
         if (!invoice) {
-            res.status(404).json({ error: 'Invoice not found' });
-            return;
+            return res.status(404).json({ error: 'Invoice not found' });
         }
 
         const changeRequestData = {

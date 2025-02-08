@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
     Table,
     TableBody,
@@ -26,22 +26,21 @@ const InvoiceDetails = () => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate(); // Use useNavigate hook
 
-    const fetchInvoice = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch(`http://localhost:2000/invoices/${id}`, {
-                credentials: 'include',
-            });
-            const data = await response.json();
-            setInvoice(data);
-        } catch (error) {
-            console.error('Error fetching invoice:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
+        const fetchInvoice = async () => {
+            try {
+                const response = await fetch(`http://localhost:2000/invoices/${id}`, {
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setInvoice(data);
+            } catch (error) {
+                console.error('Error fetching invoice:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchInvoice();
     }, [id]);
 
@@ -53,8 +52,8 @@ const InvoiceDetails = () => {
         setShowModal(false);
     };
 
-    const handleAcceptModal = async () => {
-        await fetchInvoice();
+    const handleAcceptModal = () => {
+        // Handle accept action here
         setShowModal(false);
     };
 
@@ -136,12 +135,7 @@ const InvoiceDetails = () => {
             </TableContainer>
 
             <Box display="flex" justifyContent="flex-end" mt={4}>
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleShowModal}
-                    disabled={invoice.status === 'pending'}
-                >
+                <Button variant="outlined" color="primary" onClick={handleShowModal}>
                     {i18n('invoice_correction')}
                 </Button>
             </Box>

@@ -226,8 +226,7 @@
     "discard": "Odrzuć",
     "back": "Wróć",
     "refund_requests": "Prośby o zwrot",
-    "reason": "Powód",
-    "invoice_correction": "Korekta faktury"
+    "reason": "Powód"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -341,7 +340,6 @@
     "discard": "Verwerfen",
     "back": "Zurück",
     "refund_requests": "Rückerstattungsanfragen",
-    "reason": "Grund",
-    "invoice_correction": "Rechnungskorrektur"
+    "reason": "Grund"
   }
 }

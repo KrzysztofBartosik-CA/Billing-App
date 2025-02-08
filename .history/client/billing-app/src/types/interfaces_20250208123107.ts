@@ -35,9 +35,3 @@ export interface RefundRequest {
     requestDate: string;
     status: string;
 }
-
-export interface ChangeRequest {
-    invoiceId: string;
-    updatedInvoice: Invoice;
-    requestDate: string;
-}

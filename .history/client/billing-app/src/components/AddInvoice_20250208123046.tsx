@@ -60,9 +60,7 @@ const AddInvoice = () => {
     return (
         <Box className="add-invoice">
             <Typography variant="h4" mb={4}>{i18n('add_invoice')}</Typography>
-            <Box mb={4} display="flex" justifyContent="center">
-                <InvoiceForm onSubmit={handleSubmit} loading={loading} />
-            </Box>
+            <InvoiceForm onSubmit={handleSubmit} loading={loading} />
             <Toast
                 message={toastMessage}
                 severity={toastSeverity}

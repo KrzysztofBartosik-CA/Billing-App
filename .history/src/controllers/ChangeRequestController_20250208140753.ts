@@ -2,16 +2,10 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import validator from 'validator';
 import ChangeRequest from '../models/ChangeRequest';
-import Invoice from '../models/Invoice';
+import { Invoice } from '../types/invoiceTypes';
 
 export const createChangeRequest = async (req: Request, res: Response) => {
     try {
-        const invoice = await Invoice.findById(req.body.invoiceId);
-        if (!invoice) {
-            res.status(404).json({ error: 'Invoice not found' });
-            return;
-        }
-
         const changeRequestData = {
             invoiceId: new mongoose.Types.ObjectId(req.body.invoiceId),
             updatedInvoice: {
@@ -33,13 +27,7 @@ export const createChangeRequest = async (req: Request, res: Response) => {
 
         const validChangeRequest = new ChangeRequest(changeRequestData);
         const savedChangeRequest = await validChangeRequest.save();
-
-        // Update the invoice status to 'pending'
-        invoice.status = 'pending';
-        await invoice.save();
-
         res.status(201).json(savedChangeRequest);
-        return;
     } catch (error) {
         console.error('Error saving change request:', error);
         res.status(500).json({ error: 'Internal Server Error' });

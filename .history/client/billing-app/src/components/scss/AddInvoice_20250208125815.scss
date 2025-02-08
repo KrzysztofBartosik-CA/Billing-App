@@ -1,4 +1,21 @@
 // client/billing-app/src/components/scss/AddInvoice.scss
+.add-invoice-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+}
+
+.add-invoice-form__input {
+  max-width: 300px;
+  width: 100%;
+}
+
+.add-invoice-form__button {
+  align-self: center;
+}
 
 .invoice-form {
   display: flex;

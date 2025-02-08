@@ -37,7 +37,8 @@ export interface RefundRequest {
 }
 
 export interface ChangeRequest {
-    invoiceId: string;
+    id: string;
     updatedInvoice: Invoice;
+    status: string;
     requestDate: string;
 }
