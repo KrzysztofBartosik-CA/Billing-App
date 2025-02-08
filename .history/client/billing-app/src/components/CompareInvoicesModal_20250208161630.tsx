@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Box, Typography, CircularProgress, Divider } from '@mui/material';
+import { Modal, Box, Typography, CircularProgress } from '@mui/material';
 import { ChangeRequestResponse, Invoice } from '../types/interfaces';
 import InvoiceDetailsTable from './InvoiceDetailsTable';
-import { useTranslation } from '../hooks/useTranslation';
 
 interface CompareInvoicesModalProps {
     open: boolean;
@@ -13,7 +12,7 @@ interface CompareInvoicesModalProps {
 const CompareInvoicesModal: React.FC<CompareInvoicesModalProps> = ({ open, onClose, request }) => {
     const [originalInvoice, setOriginalInvoice] = useState<Invoice | null>(null);
     const [loading, setLoading] = useState(true);
-    const { i18n } = useTranslation();
+    const {i18n} = useTranslation();
 
     useEffect(() => {
         const fetchOriginalInvoice = async () => {
@@ -47,10 +46,9 @@ const CompareInvoicesModal: React.FC<CompareInvoicesModalProps> = ({ open, onClo
                 ) : (
                     request && originalInvoice && (
                         <div>
-                            <Typography variant="h4" mb={2}>{i18n('original_invoice')}</Typography>
+                            <Typography variant="h1" mb={2}>{i18n('original_invoice')}</Typography>
                             <InvoiceDetailsTable invoice={originalInvoice} />
-                            <Divider sx={{ my: 4 }} />
-                            <Typography variant="h4" mb={2}>{i18n('updated_invoice')}</Typography>
+                            <Typography variant="h1" mb={2} mt={4}>{i18n('updated_invoice')}</Typography>
                             <InvoiceDetailsTable invoice={request.updatedInvoice} />
                         </div>
                     )

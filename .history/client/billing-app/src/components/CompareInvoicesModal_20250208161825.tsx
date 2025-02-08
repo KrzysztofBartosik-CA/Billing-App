@@ -47,10 +47,10 @@ const CompareInvoicesModal: React.FC<CompareInvoicesModalProps> = ({ open, onClo
                 ) : (
                     request && originalInvoice && (
                         <div>
-                            <Typography variant="h4" mb={2}>{i18n('original_invoice')}</Typography>
+                            <Typography variant="h2" mb={2}>{i18n('original_invoice')}</Typography>
                             <InvoiceDetailsTable invoice={originalInvoice} />
                             <Divider sx={{ my: 4 }} />
-                            <Typography variant="h4" mb={2}>{i18n('updated_invoice')}</Typography>
+                            <Typography variant="h2" mb={2}>{i18n('updated_invoice')}</Typography>
                             <InvoiceDetailsTable invoice={request.updatedInvoice} />
                         </div>
                     )
