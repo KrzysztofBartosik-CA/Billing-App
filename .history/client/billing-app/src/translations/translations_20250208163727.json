@@ -122,9 +122,7 @@
     "are_you_sure_discard": "Are you sure you want to discard this change request?",
     "updated_invoice": "Updated invoice",
     "original_invoice": "Original invoice",
-    "pay": "Pay",
-    "payment": "Payment",
-    "dont_trust_suspicious_websites": "Don't trust suspicious payment websites!"
+    "pay": "Pay"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -248,10 +246,7 @@
     "are_you_sure_confirm": "Czy na pewno chcesz zaakceptować tę prośbę o zmianę?",
     "are_you_sure_discard": "Czy na pewno chcesz odrzucić tę prośbę o zmianę?",
     "updated_invoice": "Poprawiona faktura",
-    "original_invoice": "Oryginalna faktura",
-    "pay": "Zapłać",
-    "payment": "Płatność",
-    "dont_trust_suspicious_websites": "Nie ufaj podejrzanym stronom płatniczym!"
+    "original_invoice": "Oryginalna faktura"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -375,9 +370,6 @@
     "are_you_sure_confirm": "Sind Sie sicher, dass Sie diese Änderungsanfrage akzeptieren möchten?",
     "are_you_sure_discard": "Sind Sie sicher, dass Sie diese Änderungsanfrage verwerfen möchten?",
     "updated_invoice": "Aktualisierte Rechnung",
-    "original_invoice": "Ursprüngliche Rechnung",
-    "pay": "Bezahlen",
-    "payment": "Zahlung",
-    "dont_trust_suspicious_websites": "Misstrauen Sie verdächtigen Zahlungswebsites!"
+    "original_invoice": "Ursprüngliche Rechnung"
   }
 }

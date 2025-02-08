@@ -1,16 +1,16 @@
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
 import mongoose from 'mongoose';
 import validator from 'validator';
 import Invoice from '../models/Invoice';
 import User from "../models/User";
-import { AuthenticatedRequest, User as UserType } from "../types/userTypes";
+import {AuthenticatedRequest, User as UserType} from "../types/userTypes";
 
 export const createInvoice = async (req: Request, res: Response) => {
     try {
         const userId = new mongoose.Types.ObjectId(req.body.userId);
         const user = await User.findById(userId);
         if (!user) {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({error: 'User not found'});
             return;
         }
 
@@ -46,13 +46,13 @@ export const createInvoice = async (req: Request, res: Response) => {
         res.status(201).json(savedInvoice);
     } catch (error) {
         console.error('Error saving invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
 export const getInvoices = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const { user } = req;
+        const {user} = req;
         const userId = user?._id;
         const userRole = user?.role;
 
@@ -60,13 +60,13 @@ export const getInvoices = async (req: AuthenticatedRequest, res: Response) => {
         if (userRole === 'admin') {
             invoices = await Invoice.find();
         } else {
-            invoices = await Invoice.find({ userId });
+            invoices = await Invoice.find({userId});
         }
 
         res.status(200).json(invoices);
     } catch (error) {
         console.error('Error fetching invoices:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
@@ -74,13 +74,13 @@ export const getInvoiceById = async (req: Request, res: Response) => {
     try {
         const invoice = await Invoice.findById(req.params.id);
         if (!invoice) {
-            res.status(404).json({ error: 'Invoice not found' });
+            res.status(404).json({error: 'Invoice not found'});
             return;
         }
         res.status(200).json(invoice);
     } catch (error) {
         console.error('Error fetching invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
@@ -95,20 +95,20 @@ export const updateInvoice = async (req: Request, res: Response) => {
                 quantity: item.quantity,
                 price: item.price,
                 total: item.total,
-                tax: item.tax
+                tax: item.tax // Add tax field
             })),
             status: validator.escape(req.body.status),
         };
 
-        const updatedInvoice = await Invoice.findByIdAndUpdate(req.params.id, invoiceData, { new: true });
+        const updatedInvoice = await Invoice.findByIdAndUpdate(req.params.id, invoiceData, {new: true});
         if (!updatedInvoice) {
-            res.status(404).json({ error: 'Invoice not found' });
+            res.status(404).json({error: 'Invoice not found'});
             return;
         }
         res.status(200).json(updatedInvoice);
     } catch (error) {
         console.error('Error updating invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
@@ -116,30 +116,12 @@ export const deleteInvoice = async (req: Request, res: Response) => {
     try {
         const deletedInvoice = await Invoice.findByIdAndDelete(req.params.id);
         if (!deletedInvoice) {
-            res.status(404).json({ error: 'Invoice not found' });
+            res.status(404).json({error: 'Invoice not found'});
             return;
         }
-        res.status(200).json({ message: 'Invoice deleted successfully' });
+        res.status(200).json({message: 'Invoice deleted successfully'});
     } catch (error) {
         console.error('Error deleting invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-export const payInvoice = async (req: Request, res: Response) => {
-    try {
-        const invoice = await Invoice.findById(req.params.id);
-        if (!invoice) {
-            res.status(404).json({ error: 'Invoice not found' });
-            return;
-        }
-
-        invoice.status = 'paid';
-        await invoice.save();
-
-        res.status(200).json({ message: 'Invoice paid successfully' });
-    } catch (error) {
-        console.error('Error paying invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };

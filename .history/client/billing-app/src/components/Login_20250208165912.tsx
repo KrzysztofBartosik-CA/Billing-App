@@ -46,7 +46,7 @@ const Login = () => {
                 onSubmit={handleSubmit}
                 className="login-form"
             >
-                <img width={500} height={500} src="/assets/bengal_invoices.png" alt="Bengal Invoices" className="login-form__image" />
+                <img className="login-form__logo" width={500} height={500} src="/assets/bengal_invoices.png" alt="Bengal Invoices" className="login-form__image" />
                 <TextField
                     label={i18n('username')}
                     value={username}

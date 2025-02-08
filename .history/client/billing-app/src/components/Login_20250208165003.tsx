@@ -41,12 +41,14 @@ const Login = () => {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
+            <Box mb={4}>
+                <img src="/assets/bengal_invoices.png" alt="Bengal Invoices" className="login-form__image" />
+            </Box>
             <Box
                 component="form"
                 onSubmit={handleSubmit}
                 className="login-form"
             >
-                <img width={500} height={500} src="/assets/bengal_invoices.png" alt="Bengal Invoices" className="login-form__image" />
                 <TextField
                     label={i18n('username')}
                     value={username}

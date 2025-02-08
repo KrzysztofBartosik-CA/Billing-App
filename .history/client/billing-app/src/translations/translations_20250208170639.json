@@ -123,8 +123,7 @@
     "updated_invoice": "Updated invoice",
     "original_invoice": "Original invoice",
     "pay": "Pay",
-    "payment": "Payment",
-    "dont_trust_suspicious_websites": "Don't trust suspicious payment websites!"
+    "payment": "Payment"
   },
   "pl": {
     "hello_label": "Cześć świecie",
@@ -250,8 +249,7 @@
     "updated_invoice": "Poprawiona faktura",
     "original_invoice": "Oryginalna faktura",
     "pay": "Zapłać",
-    "payment": "Płatność",
-    "dont_trust_suspicious_websites": "Nie ufaj podejrzanym stronom płatniczym!"
+    "payment": "Płatność"
   },
   "de": {
     "hello_label": "Hallo Welt",
@@ -377,7 +375,6 @@
     "updated_invoice": "Aktualisierte Rechnung",
     "original_invoice": "Ursprüngliche Rechnung",
     "pay": "Bezahlen",
-    "payment": "Zahlung",
-    "dont_trust_suspicious_websites": "Misstrauen Sie verdächtigen Zahlungswebsites!"
+    "payment": "Zahlung"
   }
 }

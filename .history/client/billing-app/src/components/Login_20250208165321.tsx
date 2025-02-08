@@ -5,6 +5,7 @@ import {useToast} from '../context/ToastContext';
 import {TextField, Button, Typography, Box} from '@mui/material';
 import {useTranslation} from '../hooks/useTranslation';
 import './scss/Login.scss';
+import img from './img/bengal_invoices.png'
 
 const Login = () => {
     const {i18n} = useTranslation();
@@ -41,12 +42,14 @@ const Login = () => {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
+            <Box mb={4}>
+                <img src={img} alt="Bengal Invoices" className="login-form__image" />
+            </Box>
             <Box
                 component="form"
                 onSubmit={handleSubmit}
                 className="login-form"
             >
-                <img width={500} height={500} src="/assets/bengal_invoices.png" alt="Bengal Invoices" className="login-form__image" />
                 <TextField
                     label={i18n('username')}
                     value={username}
