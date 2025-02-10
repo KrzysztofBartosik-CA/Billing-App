@@ -1,11 +1,13 @@
-# Billing App Client
+# Billing Project
 
-This is the client-side application for the Billing system, built with React.
+This project is a billing system that includes a server-side application built with Node.js and Express, and a client-side application built with React.
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
+- [Running MongoDB](#running-mongodb)
+- [Running the Server](#running-the-server)
+- [Running the Client](#running-the-client)
 - [Available Scripts](#available-scripts)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
@@ -13,19 +15,41 @@ This is the client-side application for the Billing system, built with React.
 
 ## Installation
 
-To install the dependencies, run:
+To install the dependencies for both the server and the client, run the following commands:
 
 ```sh
+# Navigate to the root directory of the project
+cd /path/to/Billing-project
+
+# Install server dependencies
 npm install
-```
 
-or
+# Navigate to the client directory
+cd client/billing-app
 
-```sh
+# Install client dependencies
 yarn install
 ```
 
-## Usage
+## Running MongoDB
+
+To run MongoDB, use the following command:
+
+```sh
+mongod
+```
+
+## Running the Server
+
+To start the server, run:
+
+```sh
+npm run dev
+```
+
+This will start the server on `http://localhost:2000`.
+
+## Running the Client
 
 To start the development server, run:
 
